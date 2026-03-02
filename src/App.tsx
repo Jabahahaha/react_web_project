@@ -1,7 +1,14 @@
+import GameList from "./GameList"
+import ScoreboardHeader from "./ScoreboardHeader"
+import { sampleGames } from "./scoreboard"
+
+const liveCount = sampleGames.filter((g) => g.status === "live").length
+
 const App: React.FC = () => {
   return (
     <>
-      <h1>Sports Scoreboard</h1>
+      <ScoreboardHeader liveCount={liveCount} />
+      <GameList games={sampleGames} />
     </>
   )
 }
