@@ -45,8 +45,8 @@ export const sampleGames: Game[] = [
     id: 1,
     sport: "football",
     status: "live",
-    homeTeam: { name: "Barcelona", score: 2 },
-    awayTeam: { name: "Real Madrid", score: 1 },
+    homeTeam: { name: "Barcelona", score: 0 },
+    awayTeam: { name: "Real Madrid", score: 4 },
     startTime: "20:00",
   },
   {
@@ -61,8 +61,8 @@ export const sampleGames: Game[] = [
     id: 3,
     sport: "tennis",
     status: "live",
-    homeTeam: { name: "Djokovic", score: 2 },
-    awayTeam: { name: "Alcaraz", score: 1 },
+    homeTeam: { name: "Djokovic", score: 1 },
+    awayTeam: { name: "Alcaraz", score: 2 },
     startTime: "14:00",
   },
   {
