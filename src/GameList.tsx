@@ -1,4 +1,10 @@
 import { useMemo, useState } from "react"
+import Box from "@mui/material/Box"
+import FormControl from "@mui/material/FormControl"
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import Select from "@mui/material/Select"
+import Typography from "@mui/material/Typography"
 import GameCard from "./GameCard"
 import { filterGames } from "./scoreboard"
 import type { Game, GameStatus, Sport } from "./scoreboard"
@@ -35,40 +41,56 @@ const GameList: React.FC<GameListProps> = ({ games }) => {
 
   return (
     <section>
-      <div className="filters">
-        <select
-          value={selectedSport}
-          onChange={(e) => setSelectedSport(e.target.value as Sport | "all")}
-        >
-          {sports.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+      <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+        <FormControl size="small" sx={{ minWidth: 140 }}>
+          <InputLabel>Sport</InputLabel>
+          <Select
+            value={selectedSport}
+            label="Sport"
+            onChange={(e) => setSelectedSport(e.target.value as Sport | "all")}
+          >
+            {sports.map((s) => (
+              <MenuItem key={s.value} value={s.value}>
+                {s.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <select
-          value={selectedStatus}
-          onChange={(e) =>
-            setSelectedStatus(e.target.value as GameStatus | "all")
-          }
-        >
-          {statuses.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
-      </div>
+        <FormControl size="small" sx={{ minWidth: 140 }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={selectedStatus}
+            label="Status"
+            onChange={(e) =>
+              setSelectedStatus(e.target.value as GameStatus | "all")
+            }
+          >
+            {statuses.map((s) => (
+              <MenuItem key={s.value} value={s.value}>
+                {s.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
 
       {filteredGames.length === 0 ? (
-        <p>No games found for the selected filters.</p>
+        <Typography color="text.secondary">
+          No games found for the selected filters.
+        </Typography>
       ) : (
-        <div className="game-list">
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gap: 2,
+          }}
+        >
           {filteredGames.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
-        </div>
+        </Box>
       )}
     </section>
   )
