@@ -1,16 +1,12 @@
-import { Link as RouterLink } from "react-router-dom"
+import { useParams, Link as RouterLink } from "react-router-dom"
 import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
-import CardActionArea from "@mui/material/CardActionArea"
 import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
+import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
-import { formatScore, getWinner } from "./scoreboard"
-import type { Game } from "./scoreboard"
-
-interface GameCardProps {
-  game: Game
-}
+import { sampleGames, formatScore, getWinner } from "../scoreboard"
 
 const statusColor: Record<string, "error" | "info" | "default"> = {
   live: "error",
@@ -18,23 +14,41 @@ const statusColor: Record<string, "error" | "info" | "default"> = {
   finished: "default",
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game }) => {
+const GameDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>()
+  const game = sampleGames.find((g) => g.id === Number(id))
+
+  if (!game) {
+    return (
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        <Typography variant="h5">Game not found</Typography>
+        <Button component={RouterLink} to="/" sx={{ mt: 2 }}>
+          Back to Scoreboard
+        </Button>
+      </Container>
+    )
+  }
+
   const winner = getWinner(game)
 
   return (
-    <Card variant="outlined">
-      <CardActionArea component={RouterLink} to={`/game/${game.id}`}>
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Button component={RouterLink} to="/" sx={{ mb: 3 }}>
+        &larr; Back to Scoreboard
+      </Button>
+
+      <Card variant="outlined">
         <CardContent>
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mb: 1.5,
+              mb: 2,
             }}
           >
             <Typography
-              variant="caption"
+              variant="overline"
               sx={{ textTransform: "capitalize" }}
               color="text.secondary"
             >
@@ -47,24 +61,19 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               sx={{ textTransform: "capitalize", fontWeight: 600 }}
             />
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 1.5,
-            }}
-          >
-            <Typography variant="subtitle1" fontWeight={600}>
+
+          <Box sx={{ textAlign: "center", mb: 3 }}>
+            <Typography variant="h5" fontWeight={700}>
               {game.homeTeam.name}
             </Typography>
-            <Typography variant="h6" fontWeight={700}>
+            <Typography variant="h3" fontWeight={700} sx={{ my: 1 }}>
               {formatScore(game)}
             </Typography>
-            <Typography variant="subtitle1" fontWeight={600}>
+            <Typography variant="h5" fontWeight={700}>
               {game.awayTeam.name}
             </Typography>
           </Box>
+
           <Box
             sx={{
               display: "flex",
@@ -72,19 +81,19 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
               alignItems: "center",
             }}
           >
-            <Typography variant="caption" color="text.secondary">
-              Start: {game.startTime}
+            <Typography variant="body2" color="text.secondary">
+              Start time: {game.startTime}
             </Typography>
             {winner && (
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="body2" color="text.secondary">
                 Winner: {winner}
               </Typography>
             )}
           </Box>
         </CardContent>
-      </CardActionArea>
-    </Card>
+      </Card>
+    </Container>
   )
 }
 
-export default GameCard
+export default GameDetailPage
