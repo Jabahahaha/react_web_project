@@ -1,15 +1,38 @@
+import { Suspense } from "react"
+import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
+import ErrorBoundary from "../components/ErrorBoundary"
 import GameList from "../GameList"
 import ScoreboardHeader from "../ScoreboardHeader"
-import { sampleGames } from "../scoreboard"
+import { useGames } from "../hooks/useGames"
 
-const liveCount = sampleGames.filter((g) => g.status === "live").length
+const GamesContent: React.FC = () => {
+  const { data: games } = useGames()
+  const liveCount = games.filter((g) => g.status === "live").length
+
+  return (
+    <>
+      <ScoreboardHeader liveCount={liveCount} />
+      <GameList games={games} />
+    </>
+  )
+}
+
+const LoadingFallback: React.FC = () => (
+  <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
+    <CircularProgress />
+  </Box>
+)
 
 const HomePage: React.FC = () => {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <ScoreboardHeader liveCount={liveCount} />
-      <GameList games={sampleGames} />
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <GamesContent />
+        </Suspense>
+      </ErrorBoundary>
     </Container>
   )
 }

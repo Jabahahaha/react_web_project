@@ -1,12 +1,16 @@
+import { Suspense } from "react"
 import { useParams, Link as RouterLink } from "react-router-dom"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
+import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
-import { sampleGames, formatScore, getWinner } from "../scoreboard"
+import { formatScore, getWinner } from "../scoreboard"
+import { useGame } from "../hooks/useGames"
+import ErrorBoundary from "../components/ErrorBoundary"
 
 const statusColor: Record<string, "error" | "info" | "default"> = {
   live: "error",
@@ -14,25 +18,24 @@ const statusColor: Record<string, "error" | "info" | "default"> = {
   finished: "default",
 }
 
-const GameDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
-  const game = sampleGames.find((g) => g.id === Number(id))
+const GameContent: React.FC<{ id: number }> = ({ id }) => {
+  const { data: game } = useGame(id)
 
   if (!game) {
     return (
-      <Container maxWidth="md" sx={{ py: 4 }}>
+      <>
         <Typography variant="h5">Game not found</Typography>
         <Button component={RouterLink} to="/" sx={{ mt: 2 }}>
           Back to Scoreboard
         </Button>
-      </Container>
+      </>
     )
   }
 
   const winner = getWinner(game)
 
   return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
+    <>
       <Button component={RouterLink} to="/" sx={{ mb: 3 }}>
         &larr; Back to Scoreboard
       </Button>
@@ -92,6 +95,38 @@ const GameDetailPage: React.FC = () => {
           </Box>
         </CardContent>
       </Card>
+    </>
+  )
+}
+
+const LoadingFallback: React.FC = () => (
+  <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
+    <CircularProgress />
+  </Box>
+)
+
+const GameDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>()
+  const numericId = Number(id)
+
+  if (!id || isNaN(numericId)) {
+    return (
+      <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Typography variant="h5">Invalid game ID</Typography>
+        <Button component={RouterLink} to="/" sx={{ mt: 2 }}>
+          Back to Scoreboard
+        </Button>
+      </Container>
+    )
+  }
+
+  return (
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <GameContent id={numericId} />
+        </Suspense>
+      </ErrorBoundary>
     </Container>
   )
 }
