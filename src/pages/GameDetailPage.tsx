@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 import { formatScore, getWinner } from "../scoreboard"
+import { useFavorites } from "../hooks/useFavorites"
 import { useGame } from "../hooks/useGames"
 import ErrorBoundary from "../components/ErrorBoundary"
 
@@ -20,6 +21,7 @@ const statusColor: Record<string, "error" | "info" | "default"> = {
 
 const GameContent: React.FC<{ id: number }> = ({ id }) => {
   const { data: game } = useGame(id)
+  const { isFavorite, toggleFavorite } = useFavorites()
 
   if (!game) {
     return (
@@ -33,12 +35,22 @@ const GameContent: React.FC<{ id: number }> = ({ id }) => {
   }
 
   const winner = getWinner(game)
+  const favorited = isFavorite(game.id)
 
   return (
     <>
-      <Button component={RouterLink} to="/" sx={{ mb: 3 }}>
-        &larr; Back to Scoreboard
-      </Button>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+        <Button component={RouterLink} to="/">
+          &larr; Back to Scoreboard
+        </Button>
+        <Button
+          variant={favorited ? "contained" : "outlined"}
+          color="secondary"
+          onClick={() => toggleFavorite(game.id)}
+        >
+          {favorited ? "\u2605 Favorited" : "\u2606 Favorite"}
+        </Button>
+      </Box>
 
       <Card variant="outlined">
         <CardContent>

@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
 import ErrorBoundary from "../components/ErrorBoundary"
+import { FilterProvider } from "../context/FilterProvider"
 import GameList from "../GameList"
 import ScoreboardHeader from "../ScoreboardHeader"
 import { useGames } from "../hooks/useGames"
@@ -29,9 +30,11 @@ const HomePage: React.FC = () => {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <GamesContent />
-        </Suspense>
+        <FilterProvider>
+          <Suspense fallback={<LoadingFallback />}>
+            <GamesContent />
+          </Suspense>
+        </FilterProvider>
       </ErrorBoundary>
     </Container>
   )

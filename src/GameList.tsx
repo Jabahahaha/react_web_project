@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import Typography from "@mui/material/Typography"
 import GameCard from "./GameCard"
+import { useFilter } from "./hooks/useFilter"
 import { filterGames } from "./scoreboard"
 import type { Game, GameStatus, Sport } from "./scoreboard"
 
@@ -29,10 +30,12 @@ const statuses: { label: string; value: GameStatus | "all" }[] = [
 ]
 
 const GameList: React.FC<GameListProps> = ({ games }) => {
-  const [selectedSport, setSelectedSport] = useState<Sport | "all">("all")
-  const [selectedStatus, setSelectedStatus] = useState<GameStatus | "all">(
-    "all",
-  )
+  const {
+    sport: selectedSport,
+    status: selectedStatus,
+    setSport: setSelectedSport,
+    setStatus: setSelectedStatus,
+  } = useFilter()
 
   const filteredGames = useMemo(
     () => filterGames(games, selectedSport, selectedStatus),

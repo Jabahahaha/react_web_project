@@ -4,7 +4,9 @@ import Card from "@mui/material/Card"
 import CardActionArea from "@mui/material/CardActionArea"
 import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
+import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
+import { useFavorites } from "./hooks/useFavorites"
 import { formatScore, getWinner } from "./scoreboard"
 import type { Game } from "./scoreboard"
 
@@ -20,6 +22,8 @@ const statusColor: Record<string, "error" | "info" | "default"> = {
 
 const GameCard: React.FC<GameCardProps> = ({ game }) => {
   const winner = getWinner(game)
+  const { isFavorite, toggleFavorite } = useFavorites()
+  const favorited = isFavorite(game.id)
 
   return (
     <Card variant="outlined">
@@ -40,12 +44,27 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
             >
               {game.sport}
             </Typography>
-            <Chip
-              label={game.status}
-              size="small"
-              color={statusColor[game.status]}
-              sx={{ textTransform: "capitalize", fontWeight: 600 }}
-            />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <IconButton
+                size="small"
+                aria-label={
+                  favorited ? "Remove from favorites" : "Add to favorites"
+                }
+                onClick={(e) => {
+                  e.preventDefault()
+                  toggleFavorite(game.id)
+                }}
+                sx={{ color: favorited ? "secondary.main" : "text.secondary" }}
+              >
+                {favorited ? "\u2605" : "\u2606"}
+              </IconButton>
+              <Chip
+                label={game.status}
+                size="small"
+                color={statusColor[game.status]}
+                sx={{ textTransform: "capitalize", fontWeight: 600 }}
+              />
+            </Box>
           </Box>
           <Box
             sx={{

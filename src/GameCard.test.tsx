@@ -1,14 +1,17 @@
 import { describe, it, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
+import { FavoritesProvider } from "./context/FavoritesProvider"
 import GameCard from "./GameCard"
 import type { Game } from "./scoreboard"
 
 const renderWithRouter = (game: Game) =>
   render(
-    <MemoryRouter>
-      <GameCard game={game} />
-    </MemoryRouter>,
+    <FavoritesProvider>
+      <MemoryRouter>
+        <GameCard game={game} />
+      </MemoryRouter>
+    </FavoritesProvider>,
   )
 
 describe("GameCard", () => {
