@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
+        <BrowserRouter basename="/react_web_project">
           <Routes>
             <Route element={<App />}>
               <Route index element={<HomePage />} />
