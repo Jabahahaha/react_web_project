@@ -1,20 +1,4 @@
-export type Sport = "football" | "basketball" | "tennis" | "hockey"
-
-export type GameStatus = "scheduled" | "live" | "finished"
-
-export interface Team {
-  name: string
-  score: number
-}
-
-export interface Game {
-  id: number
-  sport: Sport
-  status: GameStatus
-  homeTeam: Team
-  awayTeam: Team
-  startTime: string
-}
+import type { Game, GameStatus, Sport } from "./types"
 
 export function getWinner(game: Game): string | null {
   if (game.status !== "finished") return null

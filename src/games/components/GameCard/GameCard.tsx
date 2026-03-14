@@ -6,9 +6,9 @@ import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
-import { useFavorites } from "./hooks/useFavorites"
-import { formatScore, getWinner } from "./scoreboard"
-import type { Game } from "./scoreboard"
+import { useFavorites } from "../../hooks/useFavorites"
+import { formatScore, getWinner } from "../../scoreboard"
+import type { Game } from "../../types"
 
 interface GameCardProps {
   game: Game

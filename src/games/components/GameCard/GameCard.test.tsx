@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import { FavoritesProvider } from "./context/FavoritesProvider"
+import { FavoritesProvider } from "../../context/FavoritesProvider"
 import GameCard from "./GameCard"
-import type { Game } from "./scoreboard"
+import type { Game } from "../../types"
 
 const renderWithRouter = (game: Game) =>
   render(

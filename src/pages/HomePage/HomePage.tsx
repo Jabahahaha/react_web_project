@@ -2,11 +2,11 @@ import { Suspense } from "react"
 import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
-import ErrorBoundary from "../components/ErrorBoundary"
-import { FilterProvider } from "../context/FilterProvider"
-import GameList from "../GameList"
-import ScoreboardHeader from "../ScoreboardHeader"
-import { useGames } from "../hooks/useGames"
+import ErrorBoundary from "../../shared/components/ErrorBoundary"
+import { FilterProvider } from "../../games/context/FilterProvider"
+import GameList from "../../games/components/GameList"
+import ScoreboardHeader from "../../games/components/ScoreboardHeader"
+import { useGames } from "../../games/hooks/useGames"
 
 const GamesContent: React.FC = () => {
   const { data: games } = useGames()

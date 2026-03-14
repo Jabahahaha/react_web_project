@@ -5,10 +5,10 @@ import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import Typography from "@mui/material/Typography"
-import GameCard from "./GameCard"
-import { useFilter } from "./hooks/useFilter"
-import { filterGames } from "./scoreboard"
-import type { Game, GameStatus, Sport } from "./scoreboard"
+import GameCard from "../GameCard"
+import { useFilter } from "../../hooks/useFilter"
+import { filterGames } from "../../scoreboard"
+import type { Game, GameStatus, Sport } from "../../types"
 
 interface GameListProps {
   games: Game[]

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { getWinner, formatScore, filterGames, sampleGames } from "./scoreboard"
-import type { Game } from "./scoreboard"
+import type { Game } from "./types"
 
 const makeGame = (overrides: Partial<Game> = {}): Game => ({
   id: 99,

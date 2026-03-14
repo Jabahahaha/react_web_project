@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import type { GameStatus, Sport } from "../scoreboard"
+import type { GameStatus, Sport } from "../types"
 
 export interface FilterState {
   sport: Sport | "all"

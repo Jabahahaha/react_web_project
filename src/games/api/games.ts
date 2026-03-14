@@ -1,5 +1,5 @@
 import { sampleGames } from "../scoreboard"
-import type { Game } from "../scoreboard"
+import type { Game } from "../types"
 
 const SIMULATED_DELAY_MS = 400
 

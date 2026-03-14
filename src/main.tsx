@@ -6,7 +6,7 @@ import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import theme from "./theme"
 import App from "./App"
-import { FavoritesProvider } from "./context/FavoritesProvider"
+import { FavoritesProvider } from "./games/context/FavoritesProvider"
 import HomePage from "./pages/HomePage"
 import GameDetailPage from "./pages/GameDetailPage"
 

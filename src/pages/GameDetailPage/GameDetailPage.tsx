@@ -8,10 +8,10 @@ import Chip from "@mui/material/Chip"
 import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
-import { formatScore, getWinner } from "../scoreboard"
-import { useFavorites } from "../hooks/useFavorites"
-import { useGame } from "../hooks/useGames"
-import ErrorBoundary from "../components/ErrorBoundary"
+import { formatScore, getWinner } from "../../games/scoreboard"
+import { useFavorites } from "../../games/hooks/useFavorites"
+import { useGame } from "../../games/hooks/useGames"
+import ErrorBoundary from "../../shared/components/ErrorBoundary"
 
 const statusColor: Record<string, "error" | "info" | "default"> = {
   live: "error",

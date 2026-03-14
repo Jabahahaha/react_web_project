@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { ReactNode } from "react"
-import type { GameStatus, Sport } from "../scoreboard"
+import type { GameStatus, Sport } from "../types"
 import { FilterContext } from "./FilterContext"
 
 export const FilterProvider: React.FC<{ children: ReactNode }> = ({
