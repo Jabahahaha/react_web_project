@@ -26,6 +26,7 @@ src/
       ScoreboardHeader/
     context/                      # Favorites & Filter context/providers
     hooks/                        # Domain hooks (useGames, useFilter, useFavorites)
+    constants.ts                  # Shared domain constants (statusColor)
     types.ts                      # Game data types (Game, Team, Sport, GameStatus)
     scoreboard.ts                 # Pure business logic (getWinner, formatScore, filterGames)
   pages/                          # Route-level page modlets
@@ -34,6 +35,7 @@ src/
   shared/                         # Cross-cutting, reusable utilities
     components/
       ErrorBoundary/
+      LoadingSpinner/
   App.tsx                         # Layout shell (AppBar + Outlet)
   main.tsx                        # Entry point, providers, routing
   theme.ts                        # MUI theme configuration
@@ -64,12 +66,21 @@ npm run dev          # Start dev server at http://localhost:5173
 
 ## Scripts
 
-| Command         | Description                                        |
-| --------------- | -------------------------------------------------- |
-| `npm run dev`   | Start Vite dev server                              |
-| `npm run build` | Type-check and build for production                |
+| Command         | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `npm run dev`   | Start Vite dev server                                    |
+| `npm run build` | Type-check and build for production                      |
 | `npm run lint`  | Run all quality checks (tsc, eslint, prettier, depcheck) |
-| `npm test`      | Run all tests with Vitest                          |
+| `npm test`      | Run all tests with Vitest                                |
+
+## Project Conventions
+
+- **Modlet pattern:** Every component and page lives in its own folder with the component file, a test file, and an `index.ts` barrel export (e.g., `GameCard/GameCard.tsx`, `GameCard/GameCard.test.tsx`, `GameCard/index.ts`).
+- **Domain-based organization:** Features are grouped by domain (`games/`), not by layer. Each domain contains its own `api/`, `components/`, `context/`, `hooks/`, `types.ts`, and business logic.
+- **shared/ folder:** Cross-cutting components that are not specific to any domain go in `shared/components/` (e.g., `ErrorBoundary`, `LoadingSpinner`).
+- **State scoping:** Context providers are placed at the narrowest possible scope. `FavoritesProvider` is global (needed across pages), while `FilterProvider` wraps only `HomePage` to prevent filter state from leaking.
+- **Data fetching:** All API calls are async functions in `api/` files, consumed via custom hooks using TanStack Query (`useSuspenseQuery`). Components never call fetch functions directly.
+- **No `any` types:** Strict TypeScript is enforced. All data structures, props, and context values are explicitly typed.
 
 ## CI/CD
 

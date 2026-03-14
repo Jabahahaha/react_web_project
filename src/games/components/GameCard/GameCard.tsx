@@ -6,18 +6,13 @@ import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
+import { statusColor } from "../../constants"
 import { useFavorites } from "../../hooks/useFavorites"
 import { formatScore, getWinner } from "../../scoreboard"
 import type { Game } from "../../types"
 
 interface GameCardProps {
   game: Game
-}
-
-const statusColor: Record<string, "error" | "info" | "default"> = {
-  live: "error",
-  scheduled: "info",
-  finished: "default",
 }
 
 const GameCard: React.FC<GameCardProps> = ({ game }) => {

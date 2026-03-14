@@ -5,19 +5,14 @@ import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import Chip from "@mui/material/Chip"
-import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 import { formatScore, getWinner } from "../../games/scoreboard"
+import { statusColor } from "../../games/constants"
 import { useFavorites } from "../../games/hooks/useFavorites"
 import { useGame } from "../../games/hooks/useGames"
 import ErrorBoundary from "../../shared/components/ErrorBoundary"
-
-const statusColor: Record<string, "error" | "info" | "default"> = {
-  live: "error",
-  scheduled: "info",
-  finished: "default",
-}
+import LoadingSpinner from "../../shared/components/LoadingSpinner"
 
 const GameContent: React.FC<{ id: number }> = ({ id }) => {
   const { data: game } = useGame(id)
@@ -111,12 +106,6 @@ const GameContent: React.FC<{ id: number }> = ({ id }) => {
   )
 }
 
-const LoadingFallback: React.FC = () => (
-  <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
-    <CircularProgress />
-  </Box>
-)
-
 const GameDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const numericId = Number(id)
@@ -135,7 +124,7 @@ const GameDetailPage: React.FC = () => {
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <GameContent id={numericId} />
         </Suspense>
       </ErrorBoundary>

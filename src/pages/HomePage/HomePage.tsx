@@ -1,8 +1,7 @@
 import { Suspense } from "react"
-import CircularProgress from "@mui/material/CircularProgress"
 import Container from "@mui/material/Container"
-import Box from "@mui/material/Box"
 import ErrorBoundary from "../../shared/components/ErrorBoundary"
+import LoadingSpinner from "../../shared/components/LoadingSpinner"
 import { FilterProvider } from "../../games/context/FilterProvider"
 import GameList from "../../games/components/GameList"
 import ScoreboardHeader from "../../games/components/ScoreboardHeader"
@@ -20,18 +19,12 @@ const GamesContent: React.FC = () => {
   )
 }
 
-const LoadingFallback: React.FC = () => (
-  <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
-    <CircularProgress />
-  </Box>
-)
-
 const HomePage: React.FC = () => {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <ErrorBoundary>
         <FilterProvider>
-          <Suspense fallback={<LoadingFallback />}>
+          <Suspense fallback={<LoadingSpinner />}>
             <GamesContent />
           </Suspense>
         </FilterProvider>
